@@ -66,7 +66,7 @@ class Page1Fragment : Fragment(){
                     min_str = "0$min"
                 set_alarm_text("Alarm set to :$hr_str : $min_str")
                 myIntent.putExtra("extra","on")
-                pendingIntent = PendingIntent.getBroadcast(context@)//pendingIntent = PendingIntent.getBroadcast(this@MainActivity,0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT) 가원래
+                pendingIntent = PendingIntent.getBroadcast(context, 0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT)
 
             }
 
