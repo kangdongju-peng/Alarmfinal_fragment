@@ -33,7 +33,7 @@ class Page1Fragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.activity_page1_fragment, container, false)
-        alarmManager = activity?.getSystemService(Context.ALARM_SERVICE) as AlarmManager//확실 ㄴㄴ
+        alarmManager = activity!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager//확실 ㄴㄴ
         timePicker = root.findViewById(R.id.timePicker2) as TimePicker
         update_text = root.findViewById(R.id.textview) as TextView
         btnStart = root.findViewById(R.id.start_button) as Button
@@ -66,10 +66,20 @@ class Page1Fragment : Fragment(){
                     min_str = "0$min"
                 set_alarm_text("Alarm set to :$hr_str : $min_str")
                 myIntent.putExtra("extra","on")
-                pendingIntent = PendingIntent.getBroadcast(context, 0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT)
-
+                pendingIntent = PendingIntent.getBroadcast(context,0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,pendingIntent)
             }
 
+        })
+        btnStop.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                set_alarm_text("Alarm off")
+                pendingIntent = PendingIntent.getBroadcast(context,0,myIntent,PendingIntent.FLAG_UPDATE_CURRENT)
+                alarmManager.cancel(pendingIntent)
+                activity!!.sendBroadcast(myIntent)
+                myIntent.putExtra("extra","off")
+
+            }
         })
         return root
     }
